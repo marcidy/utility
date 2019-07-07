@@ -3,13 +3,8 @@
 ```
 cd web-ui
 npm install
-./node_modules/.bin/webpack
+npm run build 
+cat dist/c_embed_string.txt
 ```
 
-this creates a "dist" directory with a file `index.html`.
-
-To get the string:
-
-```
-cat dist/index.html | tr '\n' ' ' | sed -r 's/"/\\"/g'
-```
+the contents of 'c_mbed_string' should be moved into the c code directly... this isn't automated yet :(

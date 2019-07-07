@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack && cat dist/index.html | tr '\\n' ' ' | sed -r 's/\"/\\\"/g' > dist/c_embed_string.txt"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "d3": "^5.9.7"
   }
 }
