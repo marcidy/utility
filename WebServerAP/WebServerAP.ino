@@ -24,6 +24,7 @@ uint16_t avgAmp = 0;
 
 uint16_t print_delay = 50;
 uint16_t print_timer = millis();
+/*
 
 ICACHE_RAM_ATTR void rising()
 {
@@ -36,6 +37,7 @@ ICACHE_RAM_ATTR void falling()
     prev_time = micros();
     attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
 }
+*/
 
 /* Put your SSID & Password */
 const char* ssid = "lenny-net";  // Enter SSID here
@@ -95,11 +97,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
 
 void setup() {
     Serial.begin(115200);
-    Serial.setDebugOutput(true);
+    // Serial.setDebugOutput(true);
 
     WiFi.softAP(ssid, password);
     WiFi.softAPConfig(local_ip, gateway, subnet);
-    delay(100);
+    delay(500);
 
     server.on("/", handle_OnConnect);
     server.onNotFound(handle_NotFound);
@@ -114,7 +116,7 @@ void setup() {
     //
     pinMode(flow_meter, INPUT);
     digitalWrite(flow_meter, HIGH);
-    attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
+    // attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
      // ESP.wdtDisable();
 
     Serial.println("Done");
@@ -132,10 +134,12 @@ void loop() {
 
         String json = "{ ";
         json += "\"water\": ";
-        json += pwm_value;
+        //json += pwm_value;
+        json += 5;
         json += ",";
         json += "\"electric\": ";
-        json += inputVal;
+        //json += inputVal;
+        json += 6;
         json += " }";
 
         Serial.println(json);
