@@ -35,7 +35,7 @@ ICACHE_RAM_ATTR void falling()
 }
 
 /* Put your SSID & Password */
-const char* ssid = "silicon-cali";  // Enter SSID here
+const char* ssid = "matt";  // Enter SSID here
 const char* password = "12345678";  //Enter Password here
 
 long interval = 200;     // websocket data interval
