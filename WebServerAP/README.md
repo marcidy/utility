@@ -1,10 +1,12 @@
 ## building the string that is embedded in "SendHTML"
 
+You'll need 'xclip', 'node'.
+
 ```
 cd web-ui
 npm install
-npm run build 
-cat dist/c_embed_string.txt
+./build.sh
 ```
 
-the contents of 'c_mbed_string' should be moved into the c code directly... this isn't automated yet :(
+You'll have the contents of `dist/c_embed_string.txt` on your clipboard. Take this and paste it in WebServerAP.ino as the return value of `SendHTML`.
+

@@ -11,8 +11,18 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'anmeter',
+      template: 'src/index.html',
       inlineSource: '.(js|css)$' // embed all javascript and css inline
     }),
     new HtmlWebpackInlineSourcePlugin()
-  ]  
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+      },
+    ],
+  }
 };
