@@ -5,9 +5,6 @@
 #include <WebSocketsServer.h>
 #include <Hash.h>
 
-//
-// MATTS STUFF BELOW
-//
 #define flow_meter 14
 #define acmeter A0
 
@@ -36,9 +33,6 @@ ICACHE_RAM_ATTR void falling()
     prev_time = micros();
     attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
 }
-//
-// MATTS STUFF ABOVE
-//
 
 /* Put your SSID & Password */
 const char* ssid = "silicon-cali";  // Enter SSID here
@@ -47,7 +41,6 @@ const char* password = "12345678";  //Enter Password here
 long interval = 200;     // websocket data interval
 long lastPingMillis = 0; // stores last time clients were pinged with data
 
-
 /* Put IP Address details */
 IPAddress local_ip(192,168,1,1);
 IPAddress gateway(192,168,1,1);
@@ -55,18 +48,6 @@ IPAddress subnet(255,255,255,0);
 
 ESP8266WebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
-
-uint8_t D5 = 14;
-uint8_t D6 = 12;
-uint8_t D7 = 13;
-
-uint8_t LED1pin = D7;
-bool LED1status = LOW;
-
-uint8_t LED2pin = D6;
-bool LED2status = LOW;
-
-uint8_t AnalogPin = A0;
 
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
@@ -112,6 +93,8 @@ void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
+  
+
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
   delay(100);
@@ -126,36 +109,17 @@ void setup() {
   webSocket.onEvent(webSocketEvent);
   Serial.println("Websocket server started");
 
+  pinMode(acmeter, INPUT);
+  
   pinMode(flow_meter, INPUT);
   digitalWrite(flow_meter, HIGH);
   attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
-  ESP.wdtDisable();
+  ESP.wdtDisable(); 
 
-  //
-  // MATTS STUFF BELOW...
-  //
-  pinMode(flow_meter, INPUT);
-  digitalWrite(flow_meter, HIGH);
-  attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
-  ESP.wdtDisable();
-  //
-  // ...MATTS STUFF ABOVE
-  //
-
-  Serial.println("Done");
+  Serial.println("Done with `setup`");
 }
 void loop() {
   server.handleClient();
-  if(LED1status)
-  {digitalWrite(LED1pin, HIGH);}
-  else
-  {digitalWrite(LED1pin, LOW);}
-  
-  if(LED2status)
-  {digitalWrite(LED2pin, HIGH);}
-  else
-  {digitalWrite(LED2pin, LOW);}
-
   webSocket.loop();
 
   unsigned long currentMillis = millis();
