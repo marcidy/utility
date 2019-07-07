@@ -41,7 +41,7 @@ ICACHE_RAM_ATTR void falling()
 //
 
 /* Put your SSID & Password */
-const char* ssid = "jay-net";  // Enter SSID here
+const char* ssid = "matt-net";  // Enter SSID here
 const char* password = "12345678";  //Enter Password here
 
 long interval = 200;     // websocket data interval
@@ -201,10 +201,10 @@ void loop() {
 
     String json = "{ ";
     json += "\"water\": ";
-    json += d6_sensor_val;
+    json += pwm_value;
     json += ",";
     json += "\"electric\": ";
-    json += d7_sensor_val;
+    json += inputVal;
     json += " }";
 
     Serial.println(json);
