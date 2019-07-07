@@ -8,7 +8,7 @@
 //
 // MATTS STUFF BELOW
 //
-#define flow_meter 14
+#define flow_meter 12 // 14
 #define acmeter A0
 
 volatile uint16_t pwm_value = 0;
@@ -113,6 +113,7 @@ void setup() {
   
   pinMode(LED1pin, OUTPUT);
   pinMode(LED2pin, OUTPUT);
+  pinMode(acmeter, INPUT);
 
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
@@ -132,11 +133,12 @@ void setup() {
   webSocket.onEvent(webSocketEvent);
   Serial.println("Websocket server started");
 
+/*
   pinMode(flow_meter, INPUT);
   digitalWrite(flow_meter, HIGH);
   attachInterrupt(digitalPinToInterrupt(flow_meter), &rising, RISING);
   ESP.wdtDisable();
-
+*/
   //
   // MATTS STUFF BELOW...
   //
@@ -166,6 +168,8 @@ void loop() {
 
   unsigned long currentMillis = millis();
 
+  inputVal = analogRead(acmeter);
+  
   if (currentMillis - lastPingMillis > interval) { 
     lastPingMillis = currentMillis;   
 
@@ -184,7 +188,6 @@ void loop() {
     // 
     // MATTS STUFF BELOW...
     //
-    inputVal = analogRead(acmeter);
 
     if ( millis() - print_timer > print_delay ) {
       noInterrupts();
