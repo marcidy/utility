@@ -5,7 +5,7 @@
 #include <WebSocketsServer.h>
 #include <Hash.h>
 
-#define flow_meter 14
+#define flow_meter 12
 #define acmeter A0
 
 volatile uint16_t pwm_value = 0;
