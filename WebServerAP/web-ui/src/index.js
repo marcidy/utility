@@ -6,16 +6,16 @@ const socket = new WebSocket("ws://192.168.1.1:81");
 const canvas_water = document.getElementById("water_canvas");
 const canvas_power = document.getElementById("power_canvas");
 
-const smoothie_water = new SmoothieChart();
-const smoothie_power = new SmoothieChart();
+const smoothie_power = new SmoothieChart({ labels:{disabled:true}});
+const smoothie_water = new SmoothieChart({ labels:{disabled: true}});
 
 const pwm_line = new TimeSeries();
 const anmeter_line = new TimeSeries();
 
-smoothie_water.addTimeSeries(anmeter_line, { labels:{disabled:true}, lineWidth:2, strokeStyle:'#0000ff' });
+smoothie_water.addTimeSeries(anmeter_line, { lineWidth:2, strokeStyle:'#ffff00' });
 smoothie_water.streamTo(canvas_water, 500);
 
-smoothie_power.addTimeSeries(pwm_line, { labels:{disabled:true}, lineWidth: 2, strokeStyle: '#00ff00' });
+smoothie_power.addTimeSeries(pwm_line, { lineWidth: 2, strokeStyle: '#0000ff' });
 smoothie_power.streamTo(canvas_power, 500);
 
 resize();
@@ -47,7 +47,7 @@ socket.onmessage = function(event) {
 	  pwm_line.append(now, Math.abs(pwm));
 	}
 
-	if (Math.abs(prev_an - anmeter) > 1) {
+	if (Math.abs(prev_an - anmeter) > 5) {
 	  anmeter_line.append(now, Math.abs(anmeter));
 	}
 
